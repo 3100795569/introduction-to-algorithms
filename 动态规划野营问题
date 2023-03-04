@@ -1,0 +1,84 @@
+#include<iostream>
+#include<string>
+using namespace std;
+typedef struct {
+	string name; 
+	int mg;
+	int momey;
+}object;
+void dynamic(int memory[5][6],object st[5], int zx[6][5]) {//六个位置五个状态//j是代表物品，i是代表空间。
+	int i = 0, j = 0,mgc;
+	int temp[6][5];
+	for (; i < 6; i++) {
+		if (st[j].mg <= i + 1) {
+			memory[j][i] = st[j].momey;
+			zx[i][j]=1;
+		}
+		else {memory[j][i] = 0;
+		}
+	}
+	i = 0; j++;
+	while (j<5)
+	{
+		mgc = i+1;//mgc代表背包容量
+		if (st[j].mg <= mgc) { 
+			memory[j][i] = st[j].momey;
+			mgc = mgc - st[j].mg;
+			temp[i][j] = 1;
+		}
+		else {
+			memory[j][i] = 0; temp[i][j] = 0;
+		}
+		if (mgc>= 1) {
+			memory[j][i] += memory[j - 1][mgc - 1];
+			for (int m = 0; m <5; m++) {
+				if (zx[mgc - 1][m] == 1) { temp[i][m] = 1; }
+			}
+		}
+		if (memory[j][i] < memory[j - 1][i]) {
+			memory[j][i] = memory[j - 1][i];
+			for (int m = 0; m < 5; m++) {
+				temp[i][m] = zx[i][m];
+			}
+		}
+		i++;
+		if (i == 6) {
+			for (int m = 0; m < 6; m++) {
+				for (int n = 0; n < 5; n++) {
+					zx[m][n] = temp[m][n];
+					temp[m][n] = 0;
+				}
+			}
+			j++; i = 0;
+		}
+	}
+}
+void input(int memory[5][6], int zx[6][5], object st[5]) {
+	for (int j = 0; j < 5; j++) {
+		for (int i = 0; i < 6; i++) {
+			cout << memory[j][i] << "  ";
+		}
+		cout << endl;
+	}
+	cout << "携带";
+	for (int i = 0; i < 5; i++) {
+		switch (zx[5][i])
+		{
+		case 0: break;
+		case 1:cout << st[i].name << "  "; break;
+		default:
+			cout << "出现错误";
+			break;
+		}
+	}
+	cout << "价值最高"<<endl;
+}
+int main() {
+	int zx[6][5];
+	object st[5] = { {"水",3,10},{"书",1,3},{"食物",2,9},{"夹克",2,5},{"相机",1,6} };
+	int memory[5][6];
+	dynamic(memory,st, zx);
+	input(memory, zx,st);
+	cout << "最高价值为:" << memory[4][5];
+	return 0;
+}

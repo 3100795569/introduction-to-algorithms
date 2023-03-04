@@ -1,0 +1,25 @@
+#include<iostream>
+using namespace std;
+void move(int n,char a,char b)
+{
+	cout<<a<<"->"<<b<<endl;
+} 
+void hanoi(int n, char a, char b, char c)
+{
+	if(n>0)
+	{
+		hanoi(n - 1, a, c, b);
+		move(n, a, b);
+		hanoi(n - 1, c, b, a);
+	}
+}
+int main()
+{
+	int n;
+	while(cin>>n)
+	{
+		char a='a',b='b',c='c';
+		hanoi(n,a,c,b);
+	}
+	return 0;
+}

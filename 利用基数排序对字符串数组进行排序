@@ -1,0 +1,90 @@
+#include<iostream>
+#include<cstring>
+#include<ctime>
+
+using namespace std;
+struct Num
+{
+	int v;
+	Num *next;
+	Num()
+	{
+		next=0;
+	}
+};
+void sort(int *arr,int len)
+{
+	const int RADIX=10;
+	int tmp;
+	Num *topBox[RADIX];
+	Num *bottomBox[RADIX];
+	for(int i=0;i<RADIX;++i)
+	{
+		topBox[i]=bottomBox[i]=new Num;
+	}
+	tmp=arr[0];
+	for(int i=0;i<len;++i)
+	{
+		if(tmp<arr[i])
+		tmp=arr[i];
+	}
+	int digCnt=1;
+	tmp/=RADIX;
+	while(tmp)
+	{
+		++digCut;
+		tmp/=RADIX;
+	}
+	Num *head=new Nem;
+	Num*cur;
+	cur=head;
+	for(int i=0;i<len;++i)
+	{
+		cur->next=new Num;
+		cur->next->v=arr[i];
+		cur=cur->next;
+	}
+	int fctor=1;
+	for(int i=0;i<digCut;++i)
+	{
+		for(cur=head->next;cur;cur=cur->next)
+		{
+			tmp=(cur->v/factor)%RADIX;
+			topBox[tmp]->next=cur;
+			topBox[tmp]=topBox[tmp]->next; 
+		}
+		cue=head;
+		for(int j=0;j<RADIX;++i)
+		{if(topBox[j]!=bottomBox[j])
+		{
+			cur->next=bottomBox[j]->next;
+			cur=topBox[j];
+			topBox[j]=bottomBox[j];
+		}
+		}
+		cur->next=0;
+		factor*=RADIX;
+	}
+	cur=head->next;
+	for(int i=0;i<len;++i,cur=cur->next)
+	{
+		arr[i]=cur->v;
+	}
+}
+void test()
+{
+	{
+	int len=20;
+	int *heap=new int[len];
+	srand(time(0));
+	for(int i=0;i<len;++i)
+	{
+		heap[i]=rand()%10000;
+	}
+}
+cout<<"初始数组:"<<endl;
+printArray(heap,len);
+sort(heap,len);
+printArray(heap,len);
+delete heap;
+}

@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+int data[ 8 ][ 8 ]; 
+int a[ 8 ];   
+int b[ 15 ];  
+int c[ 15 ];  
+int count = 0;
+ 
+void eightQueens( int );
+void output( const int [][ 8 ], int );
+ 
+int main()
+{
+ int i, j;
+ 
+ for( i = 0; i < 15; ++i ) 
+  b[ i ] = c[ i ] = 0; 
+ 
+ for( i = 0; i < 8; ++i )
+ {
+  a[ i ] = 0;    
+  for( j = 0; j < 8; ++j )
+   data[ i ][ j ] = 0;
+ }
+ 
+ eightQueens( 0 );
+ 
+ cout << "/ncount = " << count << endl;
+ return 0;
+}
+ 
+void eightQueens( int line )
+{
+ if( 8 == line )
+ {
+  output( data, 8 );
+  cout << endl;
+  return;
+ }
+ 
+ 
+ for( int column = 0; column < 8; ++column )
+ {
+  if( 0 == a[ column ] && 0 == b[ line - column + 7 ] && 0 == c[ line + column ] )
+  {
+   data[ line ][ column ] = 1; 
+
+   a[ column ] = 1;   
+   b[ line - column + 7 ] = 1; 
+   c[ line + column ] = 1;  
+   eightQueens( line + 1 ); 
+   
+   data[ line ][ column ] = 0;
+   a[ column ] = 0;
+   b[ line - column + 7 ] = 0;
+   c[ line + column ] = 0;
+  }
+ }
+}
+ 
+
+void output( const int data[][ 8 ], int size )
+{
+ for( int i = 0; i < size; ++i )
+ {
+  for( int j = 0; j < size; ++j )
+   cout << data[ i ][ j ] << ' ';
+  cout << endl;
+ }
+ ++count;
+}

@@ -1,0 +1,32 @@
+#include<iostream>
+ 2 #include<algorithm>
+ 3 #include<queue>
+ 4 #include<cmath>
+ 5 using namespace std;
+ 6 
+ 7 priority_queue<int> big;
+ 8 priority_queue<int,vector<int>,greater<int> > small;
+ 9 int a[100010];
+10 
+11 int main(){
+12     int n;
+13     cin >> n;
+14     for(int i = 1; i <= n; i++) 
+15         cin >> a[i];
+16     big.push(a[1]);
+17     cout << a[1] << endl;
+18     for(int i = 2; i <= n; i++){
+19         if(a[i] > big.top()) small.push(a[i]);
+20         else big.push(a[i]);
+21         while(abs(int(big.size() - small.size())) > 1){
+22             if(big.size() > small.size())
+23                 small.push(big.top()) , big.pop();
+24             else
+25                 big.push(small.top()) , small.pop();
+26         }
+27         if(i % 2)
+28             cout << (big.size() > small.size() ? big.top() : small.top()) << endl;
+29     }
+30     
+31     return 0;
+32 }

@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+const int a[6]={1,5,10,20,50,100};
+int main()
+{
+	int s[6],i,t,count=0,total;
+	cout<<"分别输入1，5，10，20，50，100硬币的个数："<<endl; 
+	for(i=0;i<6;i++)
+		cin>>s[i];
+	cout<<"输入支付钱数："<<endl; 
+	cin>>total;
+	for(i=5;i>=0;i--) //从大面值硬币开始 
+	{
+		t=min(total/a[i],s[i]); //花费硬币数 
+		total-=t*a[i]; 
+		count+=t;
+	}
+	cout<<"花费硬币数："<<endl; 
+	cout<<count;
+	return 0;
+} 
